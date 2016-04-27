@@ -2,27 +2,25 @@
     <head>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">        
-        <link rel="stylesheet" href="Scripts/plugins/google.places.autocomplete/autocomplete.css">        
+        <link rel="stylesheet" href="/Scripts/components/angular-google-places-autocomplete/src/autocomplete.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
     </head>
     <body flex ng-app="AddMyBag" ng-controller='testController' ng-cloak>
-        <md-toolbar layout="row" class="md-medium-tall " layout="row" layout-align="space-between center">
+        <md-toolbar layout="row" class="md-medium-tall "  layout-align="space-between center">
             <span layout-padding>
                 <h1 layout="column" class="md-primary">AddMyBag</h1>
             </span>
             <span>
-                <md-button layout="column" ng-click="showTabDialog($event)"  class="md-primary" ng-click='showPlace()' >Log in</md-button> 
+                <md-button layout="column" ng-click="showTabDialog($event)" aria-label="login" class="md-primary" ng-click='showPlace()' >Log in</md-button> 
                 
-                <md-button layout="column" layout-align="center" style="" >
+                <md-button layout="column" layout-align="center" style="" aria-label="Google" >
                     <img src="img/gplus.png" style="width:24px;height:24p" ></img>
                 </md-button>
-                <md-button layout="column" layout-align="center" ><img src="img/fb.png" style="width:24px;height:24p"></img></md-button>
+                <md-button layout="column" layout-align="center" ><img src="img/fb.png" aria-label="facebook" style="width:24px;height:24p"></img></md-button>
             </span>
         </md-toolbar>
         <md-content>
-            
-            <div ></div>
             <form class="inputIcons" no-validate name="searchForm">
                 
                 <md-input-container>
@@ -47,14 +45,21 @@
                 <md-button  class="md-primary md-raised" ng-click='showPlace()'  >Search</md-button>    
             </form>
         </md-content>
-        
-        <div ng-include="'/index.php/Welcome/TravelPostPartial'"></div>
+        <div >
+            <div >
+                <div ng-include="'/index.php/Welcome/AddRequestPartial'"></div>    
+            </div>
+            <div >
+                <div ng-include="'/index.php/Welcome/TravelPostPartial'"></div>    
+            </div>
+        </div>
         
     </body>
     
     <style type="text/css">
       .inputIcons {
         /*
+        
       .right-icon {
         position: absolute;
         top: 4px;
@@ -92,15 +97,20 @@
         }
     </style>
 
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script type="text/javascript" src="Scripts/plugins/Angular/angular-route.js"></script>
-    <script type="text/javascript" src="Scripts/plugins/jquery-1.9.1.min.js"></script>
+    <script src="/Scripts/components/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="/Scripts/components/jquery-1.9.1.min.js"></script>
+    
+    <!-- Application Script files -->
     <script type="text/javascript" src="Scripts/app/app.js"></script>
     <script type="text/javascript" src="Scripts/app/controllers/TestController.js"></script>
-    
+    <script type="text/javascript" src="Scripts/app/controllers/FormController.js"></script>
+    <script type="text/javascript" src="Scripts/app/AppConstantsModule.js"></script>
     <script type="text/javascript" src="Scripts/app/AuthorizationModule.js"></script>
     <script type="text/javascript" src="Scripts/app/google-plus-signin.js"></script>
     <script type="text/javascript" src="Scripts/app/services/testService.js"></script>
+    
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
@@ -109,8 +119,7 @@
     <!-- Angular Material Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
     <!-- Google Maps library -->    
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
-    <script type="text/javascript" src="Scripts/plugins/google.places.autocomplete/autocompletedirective.js"></script>
-    
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script type="text/javascript" src="/Scripts/components/angular-google-places-autocomplete/src/autocomplete.js"></script>    
 </html>
 

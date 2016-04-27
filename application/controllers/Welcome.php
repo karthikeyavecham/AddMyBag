@@ -159,6 +159,112 @@ class Welcome extends CI_Controller {
 		$this->load->view('TravelPost.php');
 	}
 	
+	public function AddRequestPartial()
+	{
+		$this->load->view('AddRequestPartial.php');
+	}
+	public function registerTheRequest()
+	{
+		$postdata = file_get_contents("php://input");
+		$request = json_decode($postdata);
+		$addReq = array();
+		$addReq['user_id'] = $request->userId;
+		
+		if(isset($request->arrivalDate))
+		{
+			$addReq['date_time_of_arrival'] = $request->arrivalDate;	
+		}
+		if(isset($request->comment))
+		{
+			$addReq['comment'] = $request->comment;	
+		}
+		
+		$fromPlace = $this->buildLocationData($request->from);
+		$toPlace = $this->buildLocationData($request->to);
+		
+		$this->load->model('TransactionModel');
+		$success = $this->TransactionModel->insertAddRequest($addReq, $fromPlace, $toPlace);
+		
+		$response = array();
+		if($success != -1)
+		{
+			$response["success"] = true;
+		}
+		echo json_encode($response);	
+	}
+	public function registerTheTravel()
+	{
+		$postdata = file_get_contents("php://input");
+		$request = json_decode($postdata);
+		$travel = array();
+		$travel['user_id'] = $request->userId;
+		if(isset($request->weight))
+		{
+			$travel['weight'] = $request->weight;	
+		}
+		if(isset($request->arrivalDate))
+		{
+			$travel['date_time_of_arrival'] = $request->arrivalDate;	
+		}
+		if(isset($request->comment))
+		{
+			$travel['comment'] = $request->comment;	
+		}
+		
+		
+		$fromPlace = $this->buildLocationData($request->from);
+		$toPlace = $this->buildLocationData($request->to);
+		
+		$this->load->model('TransactionModel');
+		$success = $this->TransactionModel->insertTravelPost($travel, $fromPlace, $toPlace);
+		
+		$response = array();
+		if($success != -1)
+		{
+			$response["success"] = true;
+		}
+		echo json_encode($response);
+	}
+	
+	private function buildLocationData($requestLocation)
+	{
+		$location = array();
+		$location = array();
+		
+		$location['place_id'] = $requestLocation->place_id;	
+		$location['address'] = $requestLocation->formatted_address;
+		$location['country'] = $requestLocation->place_id;	
+		
+		if(isset($requestLocation->locality))
+		{
+			$location['locality'] = $requestLocation->locality;	
+		}
+		if(isset($request->locality))
+		{
+			$location['locality'] = $requestLocation->locality;	
+		}
+		if(isset($requestLocation->sub_locality))
+		{
+			$location['sub_locality'] = $requestLocation->sub_locality;	
+		}
+		if(isset($requestLocation->administrative_area_level_2))
+		{
+			$location['administrative_area_level_2'] = $requestLocation->administrative_area_level_2;	
+		}
+		if(isset($requestLocation->administrative_area_level_1))
+		{
+			$location['administrative_area_level_1'] = $requestLocation->administrative_area_level_1;	
+		}
+		if(isset($requestLocation->latitude))
+		{
+			$location['latitude'] = $requestLocation->latitude;	
+		}
+		if(isset($requestLocation->longitude))
+		{
+			$location['longitude'] = $requestLocation->longitude;	
+		}
+		return $location;
+	}
 	
 	public function fbLogin()
 	{
